@@ -1,22 +1,24 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowSpawner : CatchedMonoBehaviour {
+namespace Assets.Scripts.Crossbow
+{
+    public class ArrowSpawner : CatchedMonoBehaviour {
+        private float _attackRate;
+        private float _nextAttack;
 
-    float attackRate, nextAttack;
-    void Update() {
-        attackRate = CatchedGameController.PlayerAttackSpeed;
-        if (Input.GetMouseButtonDown(0) && Time.time > nextAttack) {
-            nextAttack = Time.time + attackRate;
+        void Update() {
+            _attackRate = CatchedGameController.PlayerAttackSpeed;
+            if (!Input.GetMouseButtonDown(0) || !(Time.time > _nextAttack)) return;
+            _nextAttack = Time.time + _attackRate;
             StartCoroutine(SpawnArrow());
         }
-    }
 
-    IEnumerator SpawnArrow() {
-        yield return new WaitForSeconds(.5f);
-        CatchedObjectPooler.SpawnObject((int)Tags.Arrow, transform.position, transform.rotation);
-        CatchedObjectPooler.SpawnObject((int)Tags.Arrow, transform.position, transform.rotation);
-        yield return null;
+        IEnumerator SpawnArrow() {
+            yield return new WaitForSeconds(.5f);
+            CatchedObjectPooler.SpawnObject((int)Tags.Arrow, transform.position, transform.rotation);
+            CatchedObjectPooler.SpawnObject((int)Tags.Arrow, transform.position, transform.rotation);
+            yield return null;
+        }
     }
 }

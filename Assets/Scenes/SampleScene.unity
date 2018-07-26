@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ff60ddf410e51f48b4f31f55502ab3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
+  _sprites:
   - {fileID: 21300000, guid: c6ee1d0d7c415ab458845ab6ba500df2, type: 3}
   - {fileID: 21300000, guid: 6cca332855060614aaf537d54cc69754, type: 3}
 --- !u!212 &323006923
@@ -612,11 +612,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1c154affe9f18a4c8a52c342ede4f66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fire: {fileID: 845762328}
-  water: {fileID: 634939299}
-  earth: {fileID: 1133496048}
-  wind: {fileID: 1218751430}
-  pointsText: {fileID: 1756845365}
+  _fire: {fileID: 845762328}
+  _water: {fileID: 634939299}
+  _earth: {fileID: 1133496048}
+  _wind: {fileID: 1218751430}
+  _pointsText: {fileID: 1756845365}
 --- !u!1 &845762326
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,7 +795,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Eart
+  m_Text: 'Earth
 
 '
 --- !u!222 &1056087447

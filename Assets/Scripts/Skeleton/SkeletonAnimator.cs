@@ -1,37 +1,32 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonAnimator : CatchedMonoBehaviour, IPooledObject {
+namespace Assets.Scripts.Skeleton {
+    public class SkeletonAnimator : CatchedMonoBehaviour, IPooledObject {
+        private float _nextAttack;
+        private float _attackRate;
 
-    float nextAttack, attackRate;
-
-    public void OnObjectSpawn() {
-        attackRate = CatchedGameController.EnemyAttackSpeed;
-    }
-    private void Update() {
-        if (transform.position.x > -9.5f)
-            CatchedAnimator.Play("SkeletonWalk");
-        else if (transform.position.x == -9.5f && Time.time > nextAttack) {
-            nextAttack = Time.time + attackRate;
-            StartCoroutine(PlayAnimation("SkeletonAttack"));
+        public void OnObjectSpawn() {
+            _attackRate = CatchedGameController.EnemyAttackSpeed;
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.CompareTag("Arrow")) {
-            if (CatchedStats.CurrentHP <= 0) {
-                CatchedGameController.AlivedEnemies--;
-                CatchedAnimator.Play("SkeletonDie");
+        private void Update() {
+            if (transform.position.x > -9.5f)
+                CatchedAnimator.Play("SkeletonWalk");
+            else if (transform.position.x == -9.5f && Time.time > _nextAttack) {
+                _nextAttack = Time.time + _attackRate;
+                StartCoroutine(PlayAnimation("SkeletonAttack"));
             }
-                
-            else
-                CatchedAnimator.Play("SkeletonHurt");
         }
-    }
 
-    private IEnumerator PlayAnimation(string animationName) {
-        CatchedAnimator.Play(animationName);
-        yield return new WaitForSeconds(CatchedGameController.EnemyAttackSpeed);
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (!collision.gameObject.CompareTag("Arrow")) return;
+            CatchedAnimator.Play(CatchedStats.CurrentHp > 0 ? "SkeletonHurt" : "SkeletonDie");
+        }
+
+        private IEnumerator PlayAnimation(string animationName) {
+            CatchedAnimator.Play(animationName);
+            yield return new WaitForSeconds(CatchedGameController.EnemyAttackSpeed);
+        }
     }
 }

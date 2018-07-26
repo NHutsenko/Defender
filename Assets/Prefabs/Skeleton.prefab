@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 95956778077397234}
   - component: {fileID: 114425866069967854}
   - component: {fileID: 114129856880407412}
-  - component: {fileID: 114287945901213786}
   - component: {fileID: 114159357840253854}
+  - component: {fileID: 114287945901213786}
   - component: {fileID: 61366858769831166}
   m_Layer: 0
   m_Name: Skeleton
