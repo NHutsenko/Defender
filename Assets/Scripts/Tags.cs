@@ -1,1 +1,1 @@
-﻿enum Tags { Arrow, Skeleton, Defender}
+﻿enum Tags { Arrow, Skeleton, FireBall, Defender}

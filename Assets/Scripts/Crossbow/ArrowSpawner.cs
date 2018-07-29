@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.Crossbow
-{
+namespace Assets.Scripts.Crossbow {
     public class ArrowSpawner : CatchedMonoBehaviour {
         private float _attackRate;
         private float _nextAttack;
@@ -16,8 +15,9 @@ namespace Assets.Scripts.Crossbow
 
         IEnumerator SpawnArrow() {
             yield return new WaitForSeconds(.5f);
-            CatchedObjectPooler.SpawnObject((int)Tags.Arrow, transform.position, transform.rotation);
-            CatchedObjectPooler.SpawnObject((int)Tags.Arrow, transform.position, transform.rotation);
+            for (int i = 0; i < CatchedGameController.ArrowCounter; i++) {
+                CatchedObjectPooler.SpawnObject((int)Tags.Arrow, transform.position, transform.rotation);
+            }
             yield return null;
         }
     }

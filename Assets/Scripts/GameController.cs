@@ -3,16 +3,23 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Assets.Scripts
-{
+namespace Assets.Scripts {
     public class GameController : CatchedMonoBehaviour {
+
 
         private float _spawnWait;
         private int _enemiesCount;
         private bool _nextWave;
         private int _points;
-        private bool _spawnDefender;
+        private int _spawnDefender;
+        private int _arrowCounter;
         private bool _endWave;
+        public int ArrowCounter {
+            get {
+                return _arrowCounter;
+            }
+        }
+
         #region stats
         private int _enemyAttack;
         private int _enemyArmor;
@@ -50,6 +57,51 @@ namespace Assets.Scripts
         }
         #endregion
 
+        #region element levels
+        private int _fireLevel;
+        private int _waterLevel;
+        private int _earthLevel;
+        private int _windLevel;
+        public int FireLevel {
+            get {
+                return _fireLevel;
+            }
+
+            set {
+                _fireLevel = value;
+            }
+        }
+
+        public int WaterLevel {
+            get {
+                return _waterLevel;
+            }
+
+            set {
+                _waterLevel = value;
+            }
+        }
+
+        public int EarthLevel {
+            get {
+                return _earthLevel;
+            }
+
+            set {
+                _earthLevel = value;
+            }
+        }
+
+        public int WindLevel {
+            get {
+                return _windLevel;
+            }
+
+            set {
+                _windLevel = value;
+            }
+        }
+        #endregion
 
         void Start() {
             _playerAttackSpeed = 1f;
@@ -59,9 +111,11 @@ namespace Assets.Scripts
             StartCoroutine(SpawnWawes(0));
             _enemyAttack = 1;
             _enemyArmor = 0;
-            _points = 0;
-            _playerAttackSpeed = 0.7f;
-            _playerAttack = 30;
+            _points = 5;
+            _playerAttackSpeed = 1f;
+            _playerAttack = 20;
+            _arrowCounter = 1;
+            _spawnDefender = 0;
         }
 
         void LateUpdate() {
@@ -73,7 +127,19 @@ namespace Assets.Scripts
                 StartCoroutine(SpawnWawes(5));
             }
 
+            StartCoroutine(ArrowCountSpawner());
+
             StartCoroutine(CheckWave());
+
+            StartCoroutine(SpawnDefender());
+        }
+
+        private IEnumerator ArrowCountSpawner() {
+            if (FireLevel == 10 && ArrowCounter != 2)
+                _arrowCounter++;
+            if (_fireLevel == 20 && ArrowCounter != 3)
+                _arrowCounter++;
+            yield return null;
         }
 
         private IEnumerator SpawnWawes(float startDelay) {
@@ -88,7 +154,8 @@ namespace Assets.Scripts
         }
 
         private IEnumerator CheckWave() {
-            var activeEnemiesList = GameObject.FindGameObjectsWithTag("Skeleton").ToList().FindAll(e => e.activeInHierarchy);
+            var activeEnemiesList =
+                GameObject.FindGameObjectsWithTag("Skeleton").ToList().FindAll(e => e.activeInHierarchy);
             if (activeEnemiesList.Count > 0) {
                 _endWave = true;
                 yield return null;
@@ -98,9 +165,17 @@ namespace Assets.Scripts
             }
         }
 
-        protected void SpawnDefender(Vector2 pos, Quaternion rot) {
-            _spawnDefender = false;
-            ObjectPooler.Instance.SpawnObject((int)Tags.Defender, pos, rot);
+        protected IEnumerator SpawnDefender() {
+            if (_waterLevel == 10 && _spawnDefender != 1) {
+                ObjectPooler.Instance.SpawnObject((int)Tags.Defender, new Vector2(-11.63f, -3.81f), Quaternion.identity);
+                _spawnDefender++;
+            }
+
+            if (_waterLevel == 20 && _spawnDefender != 2) {
+                ObjectPooler.Instance.SpawnObject((int)Tags.Defender, new Vector2(-11.63f, 3.81f), Quaternion.identity);
+                _spawnDefender++;
+            }
+            yield return null;
         }
     }
 }
