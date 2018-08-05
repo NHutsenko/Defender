@@ -3,7 +3,7 @@
 namespace Assets.Scripts
 {
     [System.Serializable]
-    public class StatsController : CatchedMonoBehaviour {
+    public class StatsController : CachedMonoBehaviour {
         private const int MaxHp = 100;
         public int CurrentHp { get; private set; }
         [SerializeField]

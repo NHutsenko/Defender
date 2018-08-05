@@ -4,7 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts {
-    public class GameController : CatchedMonoBehaviour {
+    public class GameController : CachedMonoBehaviour {
 
 
         private float _spawnWait;
@@ -111,7 +111,7 @@ namespace Assets.Scripts {
             StartCoroutine(SpawnWawes(0));
             _enemyAttack = 1;
             _enemyArmor = 0;
-            _points = 5;
+            _points = 30;
             _playerAttackSpeed = 1f;
             _playerAttack = 20;
             _arrowCounter = 1;
@@ -146,7 +146,7 @@ namespace Assets.Scripts {
             _endWave = false;
             yield return new WaitForSeconds(startDelay);
             for (int i = 0; i < _enemiesCount; i++) {
-                Vector2 spawnPosition = new Vector2(13, Random.Range(-4.5f, 4.5f));
+                Vector2 spawnPosition = new Vector2(16.25f, Random.Range(-4.5f, 4.5f));
                 Quaternion spawnRotation = Quaternion.identity;
                 ObjectPooler.Instance.SpawnObject((int)Tags.Skeleton, spawnPosition, spawnRotation);
                 yield return new WaitForSeconds(_spawnWait);
@@ -167,12 +167,12 @@ namespace Assets.Scripts {
 
         protected IEnumerator SpawnDefender() {
             if (_waterLevel == 10 && _spawnDefender != 1) {
-                ObjectPooler.Instance.SpawnObject((int)Tags.Defender, new Vector2(-11.63f, -3.81f), Quaternion.identity);
+                ObjectPooler.Instance.SpawnObject((int)Tags.Defender, new Vector2(-13.6f, -3.81f), Quaternion.identity);
                 _spawnDefender++;
             }
 
             if (_waterLevel == 20 && _spawnDefender != 2) {
-                ObjectPooler.Instance.SpawnObject((int)Tags.Defender, new Vector2(-11.63f, 3.81f), Quaternion.identity);
+                ObjectPooler.Instance.SpawnObject((int)Tags.Defender, new Vector2(-13.6f, 3.81f), Quaternion.identity);
                 _spawnDefender++;
             }
             yield return null;

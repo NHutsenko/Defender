@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace Assets.Scripts {
-    public class UIControl : CatchedMonoBehaviour {
+    public class UIControl : CachedMonoBehaviour {
 
         private const int MaxLevel = 30;
 
@@ -30,48 +30,44 @@ namespace Assets.Scripts {
         }
 
         private void TaksFire() {
-            if (CatchedGameController.Points <= 0 || CatchedGameController.FireLevel >= 30) return;
-            CatchedGameController.PlayerAttack += 1;
-            CatchedGameController.FireLevel++;
-            CatchedGameController.Points--;
-            _fire.GetComponentInChildren<Text>().text = "Fire " + CatchedGameController.FireLevel;
+            if (CachedGameController.Points <= 0 || CachedGameController.FireLevel >= 30) return;
+            CachedGameController.PlayerAttack += 1;
+            CachedGameController.FireLevel++;
+            CachedGameController.Points--;
         }
 
         private void TaksWater() {
-            if (CatchedGameController.Points <= 0 || CatchedGameController.WaterLevel >= 30) return;
-            if (CatchedGameController.WaterLevel % 2 == 0)
-                CatchedGameController.TowerAttack += 1;
-            CatchedGameController.WaterLevel++;
-            CatchedGameController.Points--;
-            _water.GetComponentInChildren<Text>().text = "Water " + CatchedGameController.WaterLevel;
+            if (CachedGameController.Points <= 0 || CachedGameController.WaterLevel >= 30) return;
+            if (CachedGameController.WaterLevel % 2 == 0)
+                CachedGameController.TowerAttack += 1;
+            CachedGameController.WaterLevel++;
+            CachedGameController.Points--;
         }
 
         private void TaksEarth() {
-            if (CatchedGameController.Points <= 0 || CatchedGameController.EarthLevel >= 30) return;
-            CatchedGameController.EarthLevel++;
-            CatchedGameController.TowerArmor += 1;
-            CatchedGameController.Points--;
-            _earth.GetComponentInChildren<Text>().text = "Earth " + CatchedGameController.EarthLevel;
+            if (CachedGameController.Points <= 0 || CachedGameController.EarthLevel >= 30) return;
+            CachedGameController.EarthLevel++;
+            CachedGameController.TowerArmor += 1;
+            CachedGameController.Points--;
         }
 
         private void TaskWind() {
-            if (CatchedGameController.Points <= 0 || CatchedGameController.WindLevel >= 30) return;
-            CatchedGameController.WindLevel++;
-            CatchedGameController.PlayerAttackSpeed -= 0.02f;
-            CatchedGameController.Points--;
-            _wind.GetComponentInChildren<Text>().text = "Wind " + CatchedGameController.WindLevel;
+            if (CachedGameController.Points <= 0 || CachedGameController.WindLevel >= 30) return;
+            CachedGameController.WindLevel++;
+            CachedGameController.PlayerAttackSpeed -= 0.02f;
+            CachedGameController.Points--;
         }
 
         private void UpdatePoints() {
-            _pointsText.text = "Points: " + CatchedGameController.Points;
+            _pointsText.text = "Points: " + CachedGameController.Points;
         }
 
         // for debug mode
         void ShowStats() {
-            Logger.LogMessage("Attack" + CatchedGameController.PlayerAttack);
-            Logger.LogMessage("Attack speed" + CatchedGameController.PlayerAttackSpeed);
-            Logger.LogMessage("Armor" + CatchedGameController.TowerArmor);
-            Logger.LogMessage("Tower Attack" + CatchedGameController.TowerAttack);
+            Logger.LogMessage("Fire " + CachedGameController.FireLevel);
+            Logger.LogMessage("Water " + CachedGameController.WaterLevel);
+            Logger.LogMessage("Earth " + CachedGameController.EarthLevel);
+            Logger.LogMessage("Wind " + CachedGameController.WindLevel);
         }
     }
 }

@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using Assets.Scripts;
 using UnityEngine;
 
-public class SkeletonStats : CatchedMonoBehaviour, IPooledObject {
+public class SkeletonStats : CachedMonoBehaviour, IPooledObject {
     private float _attackRate;
     private float _nextAttack;
 
     private StatsController _player;
 
     public void OnObjectSpawn() {
-        CatchedStats.Damage.AddStat(CatchedGameController.EnemyAttack);
-        CatchedStats.Armor.AddStat(CatchedGameController.EnemyArmor);
-        _attackRate = CatchedGameController.EnemyAttackSpeed;
+        CachedStats.Damage.AddStat(CachedGameController.EnemyAttack);
+        CachedStats.Armor.AddStat(CachedGameController.EnemyArmor);
+        _attackRate = CachedGameController.EnemyAttackSpeed;
         _player = GameObject.Find("crossbow").GetComponent<StatsController>();
     }
 
     private void Update() {
         if (!gameObject.activeInHierarchy) return;
-        if (transform.position.x != -9.5f || !(Time.time > _nextAttack)) return;
+        if (transform.position.x != -11 || !(Time.time > _nextAttack)) return;
         _nextAttack = Time.time + _attackRate;
-        _player.TakeDamage(CatchedGameController.EnemyAttack);
+        _player.TakeDamage(CachedGameController.EnemyAttack);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.CompareTag("FireBall")) {
-            CatchedStats.TakeDamage(CatchedGameController.TowerAttack);
+            CachedStats.TakeDamage(CachedGameController.TowerAttack);
         }
         if (!collision.gameObject.CompareTag("Arrow")) return;
-        CatchedStats.TakeDamage(CatchedGameController.PlayerAttack);
+        CachedStats.TakeDamage(CachedGameController.PlayerAttack);
     }
 }

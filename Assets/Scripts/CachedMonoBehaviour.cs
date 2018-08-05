@@ -2,10 +2,10 @@
 
 namespace Assets.Scripts
 {
-    public class CatchedMonoBehaviour : MonoBehaviour {
+    public class CachedMonoBehaviour : MonoBehaviour {
         private SpriteRenderer _thisSpriteRender;
 
-        public SpriteRenderer CatchedSpriteRender {
+        public SpriteRenderer CachedSpriteRender {
             get {
                 if (_thisSpriteRender == null)
                     _thisSpriteRender = GetComponent<SpriteRenderer>();
@@ -15,7 +15,7 @@ namespace Assets.Scripts
 
         private GameController _thisGameController;
 
-        public GameController CatchedGameController {
+        public GameController CachedGameController {
             get {
                 GameObject gameControllerObject = GameObject.FindGameObjectWithTag("GameController");
                 if (gameControllerObject != null)
@@ -28,7 +28,7 @@ namespace Assets.Scripts
 
         private Rigidbody2D _thisRb2D;
 
-        public Rigidbody2D CatchedRigidBody2D {
+        public Rigidbody2D CachedRigidBody2D {
             get {
                 if (_thisRb2D == null)
                     _thisRb2D = GetComponent<Rigidbody2D>();
@@ -38,7 +38,7 @@ namespace Assets.Scripts
 
         private ObjectPooler _thisObjectPooler;
 
-        public ObjectPooler CatchedObjectPooler {
+        public ObjectPooler CachedObjectPooler {
             get {
                 if(_thisObjectPooler == null)
                     _thisObjectPooler = ObjectPooler.Instance;
@@ -48,7 +48,7 @@ namespace Assets.Scripts
 
         private Animator _thisAnimator;
 
-        public Animator CatchedAnimator {
+        public Animator CachedAnimator {
             get {
                 if (_thisAnimator == null)
                     _thisAnimator = GetComponent<Animator>();
@@ -58,7 +58,7 @@ namespace Assets.Scripts
 
         private StatsController _thisStats;
 
-        public StatsController CatchedStats {
+        public StatsController CachedStats {
             get {
                 if (_thisStats == null)
                     _thisStats = GetComponent<StatsController>();

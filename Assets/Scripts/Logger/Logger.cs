@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Logger : MonoBehaviour {
+public static class Logger {
 
-	public static void LogMessage(string message) {
-        Debug.Log(message);
+    private static readonly ILogger _logger = new UnityDebugLogger();
+
+    public static void LogMessage(string msg) {
+        _logger.Info(msg);
     }
 
-    public static void LogError(string error) {
-        Debug.LogError(error);
+    public static void LogError(string msg) {
+        _logger.Error(msg);
     }
 
-    public static void LogWarning(string warning) {
-        Debug.LogWarning(warning);
+    public static void LogWarning(string msg) {
+        _logger.Warning(msg);
     }
 }

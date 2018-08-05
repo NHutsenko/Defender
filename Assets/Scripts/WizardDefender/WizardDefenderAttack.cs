@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace Assets.Scripts.WizardDefender {
-    public class WizardDefenderAttack : CatchedMonoBehaviour {
+    public class WizardDefenderAttack : CachedMonoBehaviour {
 
         private float _nextAttack;
         private float _attackRate;
@@ -24,7 +24,9 @@ namespace Assets.Scripts.WizardDefender {
 
         private GameObject FindClosestEnemy(float attackRange) {
             var enemies = GameObject.FindGameObjectsWithTag("Skeleton");
-            float minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
+            float minDistance = 0;
+            if (enemies.Length > 0)
+                minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
             int closestEnemy = 0;
 
             for (int i = 1; i < enemies.Length; i++) {
@@ -33,8 +35,8 @@ namespace Assets.Scripts.WizardDefender {
                 closestEnemy = i;
 
             }
-
-            return (minDistance < attackRange) ? enemies[closestEnemy] : null;
+            
+            return (minDistance < attackRange && enemies.Length > 0) ? enemies[closestEnemy] : null;
         }
     }
 }

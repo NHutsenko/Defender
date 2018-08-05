@@ -2,17 +2,17 @@
 using UnityEngine;
 
 namespace Assets.Scripts.Skeleton {
-    public class SkeletonAnimator : CatchedMonoBehaviour, IPooledObject {
+    public class SkeletonAnimator : CachedMonoBehaviour, IPooledObject {
         private float _nextAttack;
         private float _attackRate;
 
         public void OnObjectSpawn() {
-            _attackRate = CatchedGameController.EnemyAttackSpeed;
+            _attackRate = CachedGameController.EnemyAttackSpeed;
         }
         private void Update() {
             if (transform.position.x > -9.5f)
-                CatchedAnimator.Play("SkeletonWalk");
-            else if (transform.position.x == -9.5f && Time.time > _nextAttack) {
+                CachedAnimator.Play("SkeletonWalk");
+            else if (transform.position.x == -11 && Time.time > _nextAttack) {
                 _nextAttack = Time.time + _attackRate;
                 StartCoroutine(PlayAnimation("SkeletonAttack"));
             }
@@ -21,12 +21,12 @@ namespace Assets.Scripts.Skeleton {
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (!collision.gameObject.CompareTag("Arrow")) return;
-            CatchedAnimator.Play(CatchedStats.CurrentHp > 0 ? "SkeletonHurt" : "SkeletonDie");
+            CachedAnimator.Play(CachedStats.CurrentHp > 0 ? "SkeletonHurt" : "SkeletonDie");
         }
 
         private IEnumerator PlayAnimation(string animationName) {
-            CatchedAnimator.Play(animationName);
-            yield return new WaitForSeconds(CatchedGameController.EnemyAttackSpeed);
+            CachedAnimator.Play(animationName);
+            yield return new WaitForSeconds(CachedGameController.EnemyAttackSpeed);
         }
     }
 }

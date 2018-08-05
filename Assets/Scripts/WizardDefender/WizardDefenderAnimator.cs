@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace Assets.Scripts.WizardDefender {
-    public class WizardDefenderAnimator : CatchedMonoBehaviour {
+    public class WizardDefenderAnimator : CachedMonoBehaviour {
 
         private float _nextAttack;
         private float _attackRate;
@@ -22,11 +22,11 @@ namespace Assets.Scripts.WizardDefender {
 
         private IEnumerator PlayAnimation() {
             if (FindClosestEnemy() < 15) {
-                CatchedAnimator.Play("WizardAttack");
+                CachedAnimator.Play("WizardAttack");
                 yield return new WaitForSeconds(.5f);
-                CatchedAnimator.Play("WizardIddle");
+                CachedAnimator.Play("WizardIddle");
             } else {
-                CatchedAnimator.Play("WizardIddle");
+                CachedAnimator.Play("WizardIddle");
             }
 
             yield return null;
@@ -34,7 +34,9 @@ namespace Assets.Scripts.WizardDefender {
 
         private float FindClosestEnemy() {
             var enemies = GameObject.FindGameObjectsWithTag("Skeleton");
-            float minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
+            float minDistance = 0;
+            if (enemies.Length > 0)
+                minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
 
             for (int i = 1; i < enemies.Length; i++) {
                 if (!(minDistance > Vector2.Distance(transform.position, enemies[i].transform.position))) continue;

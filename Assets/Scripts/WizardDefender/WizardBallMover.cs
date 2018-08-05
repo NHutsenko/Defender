@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Assets.Scripts.WizardDefender {
-    public class WizardBallMover : CatchedMonoBehaviour, IPooledObject {
+    public class WizardBallMover : CachedMonoBehaviour, IPooledObject {
 
         private float _speed;
         private GameObject _closestEnemy;
