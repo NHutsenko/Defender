@@ -12,7 +12,7 @@ namespace Assets.Scripts.Skeleton {
         private void Update() {
             if (transform.position.x > -9.5f)
                 CachedAnimator.Play("SkeletonWalk");
-            else if (transform.position.x == -11 && Time.time > _nextAttack) {
+            else if (transform.position.x == -9.5f && Time.time > _nextAttack) {
                 _nextAttack = Time.time + _attackRate;
                 StartCoroutine(PlayAnimation("SkeletonAttack"));
             }

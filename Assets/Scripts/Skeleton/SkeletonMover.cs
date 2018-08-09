@@ -11,7 +11,7 @@ namespace Assets.Scripts.Skeleton
         }
 
         void Update () {
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(-11, transform.position.y), Time.deltaTime * _speed);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(-9.5f, transform.position.y), Time.deltaTime * _speed);
         }
     }
 }
