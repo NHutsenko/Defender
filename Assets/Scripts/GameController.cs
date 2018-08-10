@@ -10,17 +10,16 @@ namespace Assets.Scripts {
         private float _spawnWait;
         private int _enemiesCount;
         private bool _nextWave;
-        private int _points;
+        private int _sPoints;
         private int _spawnDefender;
         private int _arrowCounter;
         private bool _endWave;
-        public int ArrowCounter {
-            get {
-                return _arrowCounter;
-            }
-        }
+        private int _points;
+        private int _wave;
+
 
         #region stats
+
         private int _enemyAttack;
         private int _enemyArmor;
         private float _enemyAttackSpeed;
@@ -29,18 +28,30 @@ namespace Assets.Scripts {
         private int _towerArmor;
         private int _towerAttack;
         private float _playerAttackSpeed;
-        public int EnemyAttack { get { return _enemyAttack; } }
-        public int EnemyArmor { get { return _enemyArmor; } }
+        private int _healthRegeneration;
 
-        public float EnemyAttackSpeed { get { return _enemyAttackSpeed; } }
+        public int EnemyAttack {
+            get { return _enemyAttack; }
+        }
+
+        public int EnemyArmor {
+            get { return _enemyArmor; }
+        }
+
+        public float EnemyAttackSpeed {
+            get { return _enemyAttackSpeed; }
+        }
+
         public int PlayerAttack {
             get { return _playerAttack; }
             set { _playerAttack = value; }
         }
+
         public int TowerAttack {
             get { return _towerAttack; }
             set { _towerAttack = value; }
         }
+
         public int TowerArmor {
             get { return _towerArmor; }
             set { _towerArmor = value; }
@@ -50,58 +61,81 @@ namespace Assets.Scripts {
             get { return _playerAttackSpeed; }
             set { _playerAttackSpeed = value; }
         }
+        public int HealthRegeneration {
+            get {
+                return _healthRegeneration;
+            }
 
-        public int Points {
-            get { return _points; }
-            set { _points = value; }
+            set {
+                _healthRegeneration = value;
+            }
         }
+
+
         #endregion
 
         #region element levels
+
         private int _fireLevel;
         private int _waterLevel;
         private int _earthLevel;
         private int _windLevel;
-        public int FireLevel {
-            get {
-                return _fireLevel;
-            }
 
-            set {
-                _fireLevel = value;
-            }
+        public int FireLevel {
+            get { return _fireLevel; }
+
+            set { _fireLevel = value; }
         }
 
         public int WaterLevel {
-            get {
-                return _waterLevel;
-            }
+            get { return _waterLevel; }
 
-            set {
-                _waterLevel = value;
-            }
+            set { _waterLevel = value; }
         }
 
         public int EarthLevel {
-            get {
-                return _earthLevel;
-            }
+            get { return _earthLevel; }
 
-            set {
-                _earthLevel = value;
-            }
+            set { _earthLevel = value; }
         }
 
         public int WindLevel {
-            get {
-                return _windLevel;
-            }
+            get { return _windLevel; }
 
+            set { _windLevel = value; }
+        }
+
+        #endregion
+
+        #region Player info
+
+        public int Wave {
+            get { return _wave; }
+
+            set { _wave = value; }
+        }
+
+        public int ArrowCounter {
+            get { return _arrowCounter; }
+        }
+
+        public int Points {
+            get { return _points; }
+
+            set { _points = value; }
+        }
+
+        public int SPoints {
+            get {
+                return _sPoints;
+            }
             set {
-                _windLevel = value;
+                _sPoints = value;
             }
         }
+
         #endregion
+
 
         void Start() {
             _playerAttackSpeed = 1f;
@@ -111,11 +145,14 @@ namespace Assets.Scripts {
             StartCoroutine(SpawnWawes(0));
             _enemyAttack = 1;
             _enemyArmor = 0;
-            _points = 30;
+            _sPoints = 20;
             _playerAttackSpeed = 1f;
-            _playerAttack = 20;
+            _playerAttack = 0;
             _arrowCounter = 1;
             _spawnDefender = 0;
+            _points = 0;
+            _wave = 1;
+            _healthRegeneration = 0;
         }
 
         void LateUpdate() {
@@ -123,7 +160,8 @@ namespace Assets.Scripts {
                 _nextWave = false;
                 _enemyAttack++;
                 _enemyArmor++;
-                _points += 2;
+                _sPoints += 2;
+                _wave++;
                 StartCoroutine(SpawnWawes(5));
             }
 
@@ -132,6 +170,8 @@ namespace Assets.Scripts {
             StartCoroutine(CheckWave());
 
             StartCoroutine(SpawnDefender());
+
+            StartCoroutine(IncreaseHeal());
         }
 
         private IEnumerator ArrowCountSpawner() {
@@ -175,6 +215,16 @@ namespace Assets.Scripts {
                 ObjectPooler.Instance.SpawnObject((int)Tags.Defender, new Vector2(-12.1f, 4.7f), Quaternion.identity);
                 _spawnDefender++;
             }
+
+            yield return null;
+        }
+
+        private IEnumerator IncreaseHeal()
+        {
+            if (_earthLevel == 10 && _healthRegeneration != 1)
+                _healthRegeneration++;
+            if (_earthLevel == 20 && _healthRegeneration != 2)
+                _healthRegeneration++;
             yield return null;
         }
     }

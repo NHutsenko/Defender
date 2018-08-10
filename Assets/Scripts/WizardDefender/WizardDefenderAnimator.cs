@@ -39,7 +39,8 @@ namespace Assets.Scripts.WizardDefender {
                 minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);
 
             for (int i = 1; i < enemies.Length; i++) {
-                if (!(minDistance > Vector2.Distance(transform.position, enemies[i].transform.position))) continue;
+                if (!(minDistance > Vector2.Distance(transform.position, enemies[i].transform.position)))
+                    continue;
                 minDistance = Vector2.Distance(transform.position, enemies[i].transform.position);
             }
 

@@ -8,7 +8,8 @@ namespace Assets.Scripts.Crossbow {
 
         void Update() {
             _attackRate = CachedGameController.PlayerAttackSpeed;
-            if (!Input.GetMouseButtonDown(0) || !(Time.time > _nextAttack)) return;
+            if (!Input.GetMouseButtonDown(0) || !(Time.time > _nextAttack))
+                return;
             _nextAttack = Time.time + _attackRate;
             StartCoroutine(SpawnArrow());
         }

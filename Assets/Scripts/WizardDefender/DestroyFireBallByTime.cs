@@ -12,7 +12,8 @@ public class DestroyFireBallByTime : MonoBehaviour, IPooledObject {
 
     void Update()
     {
-        if (!(Time.time > _LifeTime)) return;
+        if (!(Time.time > _LifeTime))
+            return;
         gameObject.SetActive(false);
     }
 }

@@ -18,7 +18,8 @@ public class SkeletonStats : CachedMonoBehaviour, IPooledObject {
 
     private void Update() {
         if (!gameObject.activeInHierarchy) return;
-        if (transform.position.x != -9.5f || !(Time.time > _nextAttack)) return;
+        if (transform.position.x != -9.5f || !(Time.time > _nextAttack))
+            return;
         _nextAttack = Time.time + _attackRate;
         _player.TakeDamage(CachedGameController.EnemyAttack);
     }
@@ -27,7 +28,8 @@ public class SkeletonStats : CachedMonoBehaviour, IPooledObject {
         if (collision.gameObject.CompareTag("FireBall")) {
             CachedStats.TakeDamage(CachedGameController.TowerAttack);
         }
-        if (!collision.gameObject.CompareTag("Arrow")) return;
+        if (!collision.gameObject.CompareTag("Arrow"))
+            return;
         CachedStats.TakeDamage(CachedGameController.PlayerAttack);
     }
 }

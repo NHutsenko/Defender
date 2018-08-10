@@ -20,7 +20,8 @@ namespace Assets.Scripts.Skeleton {
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!collision.gameObject.CompareTag("Arrow")) return;
+            if (!collision.gameObject.CompareTag("Arrow"))
+                return;
             CachedAnimator.Play(CachedStats.CurrentHp > 0 ? "SkeletonHurt" : "SkeletonDie");
         }
 

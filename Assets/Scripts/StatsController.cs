@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts
-{
+namespace Assets.Scripts {
     [System.Serializable]
     public class StatsController : CachedMonoBehaviour {
         private const int MaxHp = 100;
-        public int CurrentHp { get; private set; }
+        public int CurrentHp { get; protected set; }
         [SerializeField]
         public Stat Damage;
         // for the future
@@ -15,14 +14,21 @@ namespace Assets.Scripts
         // event for changing HealthUI slider
         public event System.Action<int, int> OnHealthChanged;
 
-        private void Start() {
+        protected virtual void Start() {
             CurrentHp = MaxHp;
         }
 
-        public void HPRegeneration(int rVal)
-        {
-            if (CurrentHp >= MaxHp) return;
-            CurrentHp += rVal;
+        protected void HealthRegeneration(int healthPerTime) {
+            if (CurrentHp < 100) {
+                if (CurrentHp >= 100) {
+                    CurrentHp = 100;
+                    return;
+                }
+                CurrentHp += healthPerTime;
+            }
+
+            if (OnHealthChanged != null)
+                OnHealthChanged(MaxHp, CurrentHp);
         }
 
         public void TakeDamage(int damage) {
@@ -32,9 +38,11 @@ namespace Assets.Scripts
             Debug.Log(transform.name + " takes " + damage + " damage");
             if (OnHealthChanged != null)
                 OnHealthChanged(MaxHp, CurrentHp);
-            if (CurrentHp > 0) return;
+            if (CurrentHp > 0)
+                return;
             //die anim
             Debug.Log(transform.name + " died");
+            CachedGameController.Points += 10;
             CurrentHp = 100;
             gameObject.SetActive(false);
 

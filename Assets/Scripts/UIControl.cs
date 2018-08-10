@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Debug = System.Diagnostics.Debug;
 
 namespace Assets.Scripts {
     public class UIControl : CachedMonoBehaviour {
@@ -15,6 +16,9 @@ namespace Assets.Scripts {
         [SerializeField]
         private Button _wind;
         [SerializeField]
+        private Text _sPointsText;
+
+        [SerializeField]
         private Text _pointsText;
 
         void Start() {
@@ -25,41 +29,52 @@ namespace Assets.Scripts {
         }
 
         void Update() {
-            UpdatePoints();
-            //ShowStats();
+            UpdateSPoints();
+            UpdatePointsAndWave();
         }
 
         private void TaksFire() {
-            if (CachedGameController.Points <= 0 || CachedGameController.FireLevel >= 30) return;
+            if (CachedGameController.SPoints <= 0 || CachedGameController.FireLevel >= 30)
+                return;
             CachedGameController.PlayerAttack += 1;
             CachedGameController.FireLevel++;
-            CachedGameController.Points--;
+            CachedGameController.SPoints--;
         }
 
         private void TaksWater() {
-            if (CachedGameController.Points <= 0 || CachedGameController.WaterLevel >= 30) return;
+            if (CachedGameController.SPoints <= 0 || CachedGameController.WaterLevel >= 30)
+                return;
             if (CachedGameController.WaterLevel % 2 == 0)
                 CachedGameController.TowerAttack += 1;
             CachedGameController.WaterLevel++;
-            CachedGameController.Points--;
+            CachedGameController.SPoints--;
         }
 
         private void TaksEarth() {
-            if (CachedGameController.Points <= 0 || CachedGameController.EarthLevel >= 30) return;
+            if (CachedGameController.SPoints <= 0 || CachedGameController.EarthLevel >= 30)
+                return;
             CachedGameController.EarthLevel++;
             CachedGameController.TowerArmor += 1;
-            CachedGameController.Points--;
+            CachedGameController.SPoints--;
         }
 
         private void TaskWind() {
-            if (CachedGameController.Points <= 0 || CachedGameController.WindLevel >= 30) return;
+            if (CachedGameController.SPoints <= 0 || CachedGameController.WindLevel >= 30)
+                return;
             CachedGameController.WindLevel++;
             CachedGameController.PlayerAttackSpeed -= 0.02f;
-            CachedGameController.Points--;
+            CachedGameController.SPoints--;
         }
 
-        private void UpdatePoints() {
-            _pointsText.text = "Points: " + CachedGameController.Points;
+        private void UpdateSPoints() {
+            Debug.Assert(_sPointsText != null, "_sPointsText != null");
+            _sPointsText.text = "Skill Points: " + CachedGameController.SPoints;
+        }
+
+        private void UpdatePointsAndWave() {
+            if (_pointsText != null)
+                _pointsText.text = "Points: " + CachedGameController.Points+
+                    " Wave: " + CachedGameController.Wave;
         }
 
         // for debug mode

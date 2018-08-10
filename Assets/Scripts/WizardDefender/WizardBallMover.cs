@@ -13,7 +13,8 @@ namespace Assets.Scripts.WizardDefender {
 
 
         private void Update() {
-            if (_closestEnemy == null) return;
+            if (_closestEnemy == null)
+                return;
             transform.position = Vector2.MoveTowards(transform.position,
                 _closestEnemy.transform.position, Time.deltaTime * _speed);
         }
@@ -24,7 +25,8 @@ namespace Assets.Scripts.WizardDefender {
             int closestEnemy = 0;
 
             for (int i = 1; i < enemies.Length; i++) {
-                if (!(minDistance > Vector2.Distance(transform.position, enemies[i].transform.position))) continue;
+                if (!(minDistance > Vector2.Distance(transform.position, enemies[i].transform.position)))
+                    continue;
                 minDistance = Vector2.Distance(transform.position, enemies[i].transform.position);
                 closestEnemy = i;
             }

@@ -15,8 +15,10 @@ namespace Assets.Scripts.WizardDefender {
 
         private void LateUpdate() {
             GameObject closestEnemy = FindClosestEnemy(_attackRange);
-            if (closestEnemy == null) return;
-            if (!(Time.time > _nextAttack) || !closestEnemy.activeInHierarchy) return;
+            if (closestEnemy == null)
+                return;
+            if (!(Time.time > _nextAttack) || !closestEnemy.activeInHierarchy)
+                return;
             _nextAttack = Time.time + _attackRate;
             ObjectPooler.Instance.SpawnObject((int)Tags.FireBall, transform.position, Quaternion.identity);
 
@@ -30,7 +32,8 @@ namespace Assets.Scripts.WizardDefender {
             int closestEnemy = 0;
 
             for (int i = 1; i < enemies.Length; i++) {
-                if (!(minDistance > Vector2.Distance(transform.position, enemies[i].transform.position))) continue;
+                if (!(minDistance > Vector2.Distance(transform.position, enemies[i].transform.position)))
+                    continue;
                 minDistance = Vector2.Distance(transform.position, enemies[i].transform.position);
                 closestEnemy = i;
 
