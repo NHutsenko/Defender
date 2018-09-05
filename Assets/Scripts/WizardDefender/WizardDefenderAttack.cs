@@ -25,7 +25,7 @@ namespace Assets.Scripts.WizardDefender {
         }
 
         private GameObject FindClosestEnemy(float attackRange) {
-            var enemies = GameObject.FindGameObjectsWithTag("Skeleton");
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
             float minDistance = 0;
             if (enemies.Length > 0)
                 minDistance = Vector2.Distance(transform.position, enemies[0].transform.position);

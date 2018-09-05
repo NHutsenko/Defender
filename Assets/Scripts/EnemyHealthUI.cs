@@ -11,7 +11,6 @@ public class EnemyHealthUI : CachedMonoBehaviour {
     private readonly float _visibleTime = 3f;
 
     private Transform _ui;
-    private Transform _cam;
 
     [SerializeField]
     private GameObject _healthBarPrefab;
@@ -19,7 +18,6 @@ public class EnemyHealthUI : CachedMonoBehaviour {
     private Image _healthSlider;
 
     void Start() {
-        _cam = Camera.main.transform;
         GameObject canvas = GameObject.Find("Canvas");
         _ui = Instantiate(_healthBarPrefab, canvas.transform).transform;
         _healthSlider = _ui.GetChild(0).GetComponent<Image>();

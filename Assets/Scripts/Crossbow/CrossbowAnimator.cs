@@ -11,7 +11,7 @@ namespace Assets.Scripts.Crossbow
         private float _nextAttack, _attackRate;
 
         private void LateUpdate() {
-            _attackRate = CachedGameController.PlayerAttackSpeed;
+            _attackRate = CachedStatsManager.CrossbowAttackSpeed;
             if (!Input.GetMouseButtonDown(0) || !(Time.time > _nextAttack))
                 return;
             _nextAttack = Time.time + _attackRate;

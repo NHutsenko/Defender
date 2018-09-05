@@ -6,12 +6,16 @@ using UnityEngine;
 [System.Serializable]
 public class Stat {
     [SerializeField]
-    private int basicValue;
+    private int _basicValue;
     public int Value {
-        get { return basicValue; }
+        get { return _basicValue; }
     }
 
     public void AddStat(int value) {
-        basicValue += value;
+        _basicValue += value;
+    }
+
+    public void UpdateStat(int value) {
+        _basicValue = value;
     }
 }

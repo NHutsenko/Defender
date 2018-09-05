@@ -65,5 +65,17 @@ namespace Assets.Scripts
                 return _thisStats;
             }
         }
+
+        private StatsManager _thisStatManager;
+
+        public StatsManager CachedStatsManager
+        {
+            get
+            {
+                if (_thisStatManager == null)
+                    _thisStatManager = GameObject.Find("StatManager").GetComponent<StatsManager>();
+                return _thisStatManager;
+            }
+        }
     }
 }

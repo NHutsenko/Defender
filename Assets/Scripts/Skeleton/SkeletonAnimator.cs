@@ -7,7 +7,7 @@ namespace Assets.Scripts.Skeleton {
         private float _attackRate;
 
         public void OnObjectSpawn() {
-            _attackRate = CachedGameController.EnemyAttackSpeed;
+            _attackRate = CachedStatsManager.UnitAttackSpeed;
         }
         private void Update() {
             if (transform.position.x > -9.5f)
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Skeleton {
 
         private IEnumerator PlayAnimation(string animationName) {
             CachedAnimator.Play(animationName);
-            yield return new WaitForSeconds(CachedGameController.EnemyAttackSpeed);
+            yield return new WaitForSeconds(_attackRate);
         }
     }
 }

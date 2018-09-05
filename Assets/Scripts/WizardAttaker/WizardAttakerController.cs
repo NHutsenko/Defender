@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using Assets.Scripts;
 using UnityEngine;
 
-public class SkeletonStats : CachedMonoBehaviour, IPooledObject {
-    private float _attackRate;
-    private float _nextAttack;
+public class WizardAttakerController : CachedMonoBehaviour, IPooledObject {
 
     private StatsController _crossbowStats;
+    private float _nextAttack;
+    private float _attackRate;
 
     public void OnObjectSpawn() {
+        _attackRate = CachedStatsManager.UnitAttackSpeed;
         CachedStats.Damage.AddStat(CachedStatsManager.UnitAttack);
         CachedStats.Armor.AddStat(CachedStatsManager.UnitArmor);
-        _attackRate = CachedStatsManager.UnitAttackSpeed;
         _crossbowStats = GameObject.Find("crossbow").GetComponent<StatsController>();
     }
 
-    private void Update() {
-        if (!gameObject.activeInHierarchy) return;
-        if (transform.position.x != -9.5f || !(Time.time > _nextAttack))
-            return;
-        _nextAttack = Time.time + _attackRate;
-        if (_crossbowStats != null)
-            _crossbowStats.TakeDamage(CachedStats.Damage.Value);
+    void Update() {
+        if (Time.time > _nextAttack && transform.position.x == 3) {
+            _nextAttack = Time.time + _attackRate;
+            if (_crossbowStats != null)
+                _crossbowStats.TakeDamage(CachedStats.Damage.Value);
+        }
     }
 
     void LateUpdate() {
@@ -30,9 +29,6 @@ public class SkeletonStats : CachedMonoBehaviour, IPooledObject {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.CompareTag("FireBall")) {
-            CachedStats.TakeDamage(CachedStatsManager.TowerAttack);
-        }
         if (!collision.gameObject.CompareTag("Arrow"))
             return;
         CachedStats.TakeDamage(CachedStatsManager.CrossbowAttack);

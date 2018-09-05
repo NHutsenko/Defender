@@ -15,11 +15,11 @@ public class CrossbowStats : StatsController {
     }
     private void LateUpdate()
     {
-        if (CachedGameController.HealthRegeneration <= 0)
+        if (CachedStatsManager.HealthRegeneration <= 0)
             return;
         if (!(Time.time > _nextHealth))
             return;
         _nextHealth = Time.time + _healthRate;
-        HealthRegeneration(CachedGameController.HealthRegeneration);
+        HealthRegeneration(CachedStatsManager.HealthRegeneration);
     }
 }

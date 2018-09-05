@@ -5,9 +5,10 @@ namespace Assets.Scripts.Crossbow {
     public class ArrowSpawner : CachedMonoBehaviour {
         private float _attackRate;
         private float _nextAttack;
+        
 
         void Update() {
-            _attackRate = CachedGameController.PlayerAttackSpeed;
+            _attackRate = CachedStatsManager.CrossbowAttackSpeed;
             if (!Input.GetMouseButtonDown(0) || !(Time.time > _nextAttack))
                 return;
             _nextAttack = Time.time + _attackRate;
